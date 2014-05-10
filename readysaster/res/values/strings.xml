@@ -4,5 +4,9 @@
     <string name="app_name">Readysaster</string>
     <string name="action_settings">Settings</string>
     <string name="hello_world">Hello world!</string>
+    <string name="title_activity_swiper_tab">SwiperTabActivity</string>
+    <string name="title_section1">Personal Details</string>
+    <string name="title_section2">Location Details</string>
+    <string name="title_section3">Structure Details</string>
 
 </resources>
