@@ -6,7 +6,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
@@ -26,8 +25,9 @@ public class MainActivity extends BaseActivity {
 
 	private Button vCamera;
 	private ImageView vThumbnail;
-
 	private ImageView vFullPhoto;
+
+	private File mPhotoFile;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -46,14 +46,10 @@ public class MainActivity extends BaseActivity {
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
 		if (requestCode == Utilities.REQUEST_APP_CAMERA && resultCode == RESULT_OK) {
-			Bundle extras = data.getExtras();
-			if (extras != null) {
-				Bitmap bitmap = (Bitmap) extras.get("data");
-				vThumbnail.setImageBitmap(bitmap);
-			}
-
-			Uri imageUri = data.getData();
-			ImageLoader.getInstance().displayImage(imageUri.toString(), vFullPhoto);
+			logD("Data received: " + data);
+		    Uri uri = Uri.fromFile(mPhotoFile);
+		    ImageLoader.getInstance().displayImage(uri.toString(), vFullPhoto);
+		    galleryAddPic();
 		}
 	}
 
@@ -71,14 +67,26 @@ public class MainActivity extends BaseActivity {
 		@Override
 		public void onClick(View v) {
 			Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-			startActivityForResult(intent, Utilities.REQUEST_APP_CAMERA);
+			if (intent.resolveActivity(getPackageManager()) != null) {
+				mPhotoFile = null;
+				try {
+					createImageFile();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+
+				if (mPhotoFile != null) {
+					intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(mPhotoFile));
+					startActivityForResult(intent, Utilities.REQUEST_APP_CAMERA);
+				}
+			}
 		}
 
 	};
 
 	// File write helpers
-
-	private File createImageFile() throws IOException {
+	
+	private void createImageFile() throws IOException {
 		String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
 		String imageFileName = "IMG_" + timeStamp + "_";
 		File storageDir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), "Readysaster");
@@ -86,6 +94,15 @@ public class MainActivity extends BaseActivity {
 			storageDir.mkdirs();
 		}
 		File image = File.createTempFile(imageFileName, ".jpg", storageDir);
-		return image;
+		mPhotoFile = image;
+	}
+	
+	private void galleryAddPic() {
+	    Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+	    String currentPhotoPath = "file:" + mPhotoFile.getAbsolutePath();
+	    File f = new File(currentPhotoPath);
+	    Uri contentUri = Uri.fromFile(f);
+	    mediaScanIntent.setData(contentUri);
+	    this.sendBroadcast(mediaScanIntent);
 	}
 }
