@@ -8,7 +8,6 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 
 import com.icannhas.readysaster.utils.views.DetailsRow;
-import com.icannhas.readysaster.utils.views.Utilities;
 
 public class StructureDetailsTabFragment extends BasicTabFragment {
 	
