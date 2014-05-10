@@ -8,6 +8,9 @@ public class Utilities {
 	public static final String ERROR_TAG = "READYSASTER_ERROR";
 	public static final String INFO_TAG = "READYSASTER_INFO";
 	
+	// REQUEST CODE
+	public static final int REQUEST_APP_CAMERA = 1001; 
+	
 	// Helper methods
 	
 	public static void logD(String msg) {
