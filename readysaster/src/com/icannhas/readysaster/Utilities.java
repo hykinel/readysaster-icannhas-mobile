@@ -11,14 +11,17 @@ public class Utilities {
 	// Helper methods
 	
 	public static void logD(String msg) {
-		Log.d(DEBUG_TAG, msg);
+		if (ReadysasterSettings.DEBUG)
+			Log.d(DEBUG_TAG, msg);
 	}
 	
 	public static void logE(String msg) {
-		Log.e(ERROR_TAG, msg);
+		if (ReadysasterSettings.DEBUG)
+			Log.e(ERROR_TAG, msg);
 	}
 	
 	public static void logI(String msg) {
-		Log.i(INFO_TAG, msg);
+		if (ReadysasterSettings.DEBUG)
+			Log.i(INFO_TAG, msg);
 	}
 }
