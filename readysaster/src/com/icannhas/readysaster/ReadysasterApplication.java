@@ -7,6 +7,7 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.Volley;
+import com.icannhas.readysaster.managers.LocationApiManager;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
@@ -25,6 +26,7 @@ public class ReadysasterApplication extends Application {
 		singleton = this;
 
 		setupUil();
+		LocationApiManager.getInstance().startLocationListener(ReadysasterApplication.this);
 		
 		Utilities.logD(">> Finished onCreate on ReadysasterApplication");
 	}

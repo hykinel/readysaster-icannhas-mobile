@@ -21,7 +21,7 @@ import com.icannhas.readysaster.ReadysasterApplication;
 import com.icannhas.readysaster.ReadysasterSettings;
 import com.icannhas.readysaster.Utilities;
 
-public class ApiManager {
+public class ApiManager extends BaseManager {
 	private static ApiManager singleton;
 
 	public static ApiManager getInstance() {
