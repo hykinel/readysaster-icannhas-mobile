@@ -27,7 +27,7 @@ public class PersonalDetailsTabFragment extends BasicTabFragment {
 		mNumberRow = (DetailsRow) findViewById(R.id.detailsrow_number);
 		mNumberRow.setTitle("Contact Number");
 		mNumberRow.hasChoices(false);
-		mNumberRow.setInputType(InputType.TYPE_CLASS_NUMBER);
+		mNumberRow.setInputType(InputType.TYPE_CLASS_PHONE);
 		
 		mRowList = new ArrayList<DetailsRow>();
 		//add the rows to list

@@ -3,10 +3,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
+    
     <TextView 
         android:id="@+id/list_name"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:padding="5dp"/>
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:padding="10dp"/>
 
 </LinearLayout>

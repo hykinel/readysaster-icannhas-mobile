@@ -30,6 +30,7 @@ public class LocationDetailsFragment extends BasicTabFragment {
 	private ImageView vFullPhoto;
 
 	private File mPhotoFile;
+	private ImageButton vGeolocate;
 
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -65,13 +66,14 @@ public class LocationDetailsFragment extends BasicTabFragment {
 		//photo views
 		vCamera = (ImageButton) findViewById(R.id.button_camera);
 		vFullPhoto = (ImageView) findViewById(R.id.full_photo);
-
-		populateLocationFields();
+		
+		vGeolocate = (ImageButton) findViewById(R.id.button_geolocate);
 	}
 
 	private void populateLocationFields() {
 		Location location = LocationApiManager.getInstance().getCurrentLocation();
 		if (location != null) {
+			Utilities.logD("<><> LOCATION: " + location);
 			EditText latVal = (EditText) mLatRow.findViewById(R.id.details_edit_text);
 			latVal.setText(String.format("%.4f", location.getLatitude()));
 			EditText lngVal = (EditText) mLngRow.findViewById(R.id.details_edit_text);
@@ -80,12 +82,22 @@ public class LocationDetailsFragment extends BasicTabFragment {
 	}
 
 	public LocationDetails getLocationDetails() {
-		return new LocationDetails(null, Double.parseDouble(mLatRow.getDetails()), Double.parseDouble(mLngRow.getDetails()), "");
+		if (mPhotoFile != null) {
+			return new LocationDetails(null, Double.parseDouble(mLatRow.getDetails()), Double.parseDouble(mLngRow.getDetails()), mPhotoFile.getAbsolutePath());
+		} else {
+			return new LocationDetails(null, Double.parseDouble(mLatRow.getDetails()), Double.parseDouble(mLngRow.getDetails()), "");
+		}
 	}
 
 	@Override
 	public void setupListeners() {
 		vCamera.setOnClickListener(mCameraListener);
+		vGeolocate.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				populateLocationFields();
+			}
+		});
 	}
 
 	private View.OnClickListener mCameraListener = new View.OnClickListener() {

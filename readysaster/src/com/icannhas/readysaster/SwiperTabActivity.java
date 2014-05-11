@@ -116,12 +116,22 @@ public class SwiperTabActivity extends BaseActivity implements ActionBar.TabList
 
 			Log.e("name", personal.getName());
 			Log.e("name", data.getPersonalDetails().getName());
+			
+			mDataListFragment.refreshData();
+			Toast.makeText(this, "Successfully saved data!", Toast.LENGTH_SHORT).show();
+			clearAllFields();
 
 		} catch (Exception e) {
 			e.printStackTrace();
 			Toast.makeText(this, "Please fill in all the details.", Toast.LENGTH_SHORT).show();
 		}
 
+	}
+
+	private void clearAllFields() {
+		for (BasicTabFragment tabFragment : mTabsList) {
+			tabFragment.clearAllRows();
+		}
 	}
 
 	@Override
@@ -166,16 +176,22 @@ public class SwiperTabActivity extends BaseActivity implements ActionBar.TabList
 		public Fragment getItem(int position) {
 
 			if (position == 0) {
-				mPersonalDetailsTabFragment = new PersonalDetailsTabFragment();
-				mTabsList.add(mPersonalDetailsTabFragment);
-				return mPersonalDetailsTabFragment;
+				if (mPersonalDetailsTabFragment == null) {
+					mPersonalDetailsTabFragment = new PersonalDetailsTabFragment();
+					mTabsList.add(mPersonalDetailsTabFragment);
+				}
+				return mPersonalDetailsTabFragment; 
 			} else if (position == 1) {
-				mLocationDetailsFragment = new LocationDetailsFragment();
-				mTabsList.add(mLocationDetailsFragment);
+				if (mLocationDetailsFragment == null) {
+					mLocationDetailsFragment = new LocationDetailsFragment();
+					mTabsList.add(mLocationDetailsFragment);
+				}
 				return mLocationDetailsFragment;
 			} else if (position == 2) {
-				mStructureDetailsTabFragment = new StructureDetailsTabFragment();
-				mTabsList.add(mStructureDetailsTabFragment);
+				if (mStructureDetailsTabFragment == null) {
+					mStructureDetailsTabFragment = new StructureDetailsTabFragment();
+					mTabsList.add(mStructureDetailsTabFragment);
+				}
 				return mStructureDetailsTabFragment;
 			} else {
 				mDataListFragment = new DataListFragment();

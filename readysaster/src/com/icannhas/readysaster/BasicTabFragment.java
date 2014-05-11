@@ -3,13 +3,13 @@ package com.icannhas.readysaster;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.icannhas.readysaster.utils.views.DetailsRow;
-
 import android.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.icannhas.readysaster.utils.views.DetailsRow;
 
 public abstract class BasicTabFragment extends Fragment {
 
@@ -45,6 +45,12 @@ public abstract class BasicTabFragment extends Fragment {
 		}
 		sb.append("\n");
 		return sb.toString();
+	}
+	
+	public void clearAllRows() {
+		for(DetailsRow row : mRowList) {
+			row.clearField();
+		}
 	}
 	
 	public abstract int getLayoutResourceId();

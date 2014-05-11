@@ -24,14 +24,18 @@ public class DataListFragment extends Fragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		View rootview = inflater.inflate(R.layout.fragment_data_list, null);
 		vList = (ListView) rootview.findViewById(R.id.fragment_listviw);
+		refreshData();
+		setupListeners();
+		return rootview;
+	}
+	
+	public void refreshData() {
 		data = ReadysasterApplication.getInstance().getDaoSession().getDataDao().queryBuilder().list();
 		names = new ArrayList<String>();
 		for(int i = 0;i<data.size();i++)
 			names.add(data.get(i).getPersonalDetails().getName());
 		ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), R.layout.list_row, R.id.list_name, names);
 		vList.setAdapter(adapter);
-		setupListeners();
-		return rootview;
 	}
 	
 	public void setupListeners(){
