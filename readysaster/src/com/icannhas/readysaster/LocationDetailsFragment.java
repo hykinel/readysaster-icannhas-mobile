@@ -13,8 +13,8 @@ import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 
 import com.icannhas.readysaster.managers.LocationApiManager;
@@ -26,7 +26,7 @@ public class LocationDetailsFragment extends BasicTabFragment {
 	private DetailsRow mLatRow;
 	private DetailsRow mLngRow;
 
-	private Button vCamera;
+	private ImageButton vCamera;
 	private ImageView vFullPhoto;
 
 	private File mPhotoFile;
@@ -63,7 +63,7 @@ public class LocationDetailsFragment extends BasicTabFragment {
 		mRowList.add(mLngRow);
 
 		//photo views
-		vCamera = (Button) findViewById(R.id.button_camera);
+		vCamera = (ImageButton) findViewById(R.id.button_camera);
 		vFullPhoto = (ImageView) findViewById(R.id.full_photo);
 
 		populateLocationFields();

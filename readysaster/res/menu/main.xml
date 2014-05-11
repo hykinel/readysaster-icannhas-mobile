@@ -1,6 +1,12 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
 
     <item
+        android:id="@+id/action_save"
+        android:icon="@drawable/ic_action_star_10_dark"
+        android:showAsAction="ifRoom"
+        android:title="Save"/>
+    
+    <item
         android:id="@+id/action_settings"
         android:orderInCategory="100"
         android:showAsAction="never"

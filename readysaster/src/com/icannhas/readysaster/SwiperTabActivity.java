@@ -23,43 +23,43 @@ public class SwiperTabActivity extends BaseActivity implements ActionBar.TabList
 	private Button mSaveButton;
 	private SectionsPagerAdapter mSectionsPagerAdapter;
 	private ViewPager mViewPager;
-	
+
 	private PersonalDetailsTabFragment mPersonalDetailsTabFragment;
 	private LocationDetailsFragment mLocationDetailsFragment;
 	private StructureDetailsTabFragment mStructureDetailsTabFragment;
-	
+
 	private List<BasicTabFragment> mTabsList;
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_swiper_tab);
-		
+
 		mTabsList = new ArrayList<BasicTabFragment>();
-		
+
 		setupViews();
 		setupListeners();
 	}
-	
-	public void setupViews(){
+
+	public void setupViews() {
 
 		mSaveButton = (Button) findViewById(R.id.save_button);
 		setupPager();
 	}
-	
-	public void setupListeners(){
+
+	public void setupListeners() {
 		mSaveButton.setOnClickListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
-				
+
 				printDetails();
-				
+
 			}
 		});
 	}
-	
-	public void setupPager(){
+
+	public void setupPager() {
 
 		final ActionBar actionBar = getActionBar();
 		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
@@ -79,57 +79,63 @@ public class SwiperTabActivity extends BaseActivity implements ActionBar.TabList
 			actionBar.addTab(actionBar.newTab().setText(mSectionsPagerAdapter.getPageTitle(i)).setTabListener(this));
 		}
 	}
-	
-	public void printDetails(){
+
+	public void printDetails() {
 		StringBuilder details = new StringBuilder();
-		for(int i = 0;i<mTabsList.size();i++){
+		for (int i = 0; i < mTabsList.size(); i++) {
 			BasicTabFragment fragment = mTabsList.get(i);
 			details.append(fragment.toJsonString());
 			details.append("\n");
 		}
-		Log.e("details",details.toString());
-		try{
+		Log.e("details", details.toString());
+		try {
 			PersonalDetails personal = mPersonalDetailsTabFragment.getPersonalDetails();
 			LocationDetails location = mLocationDetailsFragment.getLocationDetails();
 			StructureDetails structure = mStructureDetailsTabFragment.getStructureDetails();
-			
+
 			Data data = new Data();
 			data.setPersonalDetails(personal);
 			data.setLocationDetails(location);
 			data.setStructureDetails(structure);
-			
+
 			DaoSession daoSession = ReadysasterApplication.getInstance().getDaoSession();
 			DataDao dataDao = daoSession.getDataDao();
 			PersonalDetailsDao personalDao = daoSession.getPersonalDetailsDao();
 			StructureDetailsDao structureDao = daoSession.getStructureDetailsDao();
 			LocationDetailsDao locationDao = daoSession.getLocationDetailsDao();
-			
+
 			personalDao.insertInTx(personal);
 			structureDao.insertInTx(structure);
 			locationDao.insertInTx(location);
-			
+
 			dataDao.insertInTx(data);
-		} catch (Exception e){
+			Toast.makeText(this, "Successfully saved data!", Toast.LENGTH_SHORT).show();
+		} catch (Exception e) {
 			e.printStackTrace();
-			Toast.makeText(this, "Some details are incorrect", Toast.LENGTH_LONG).show();
+			Toast.makeText(this, "Please fill in all the details.", Toast.LENGTH_SHORT).show();
 		}
-		
+
 	}
-	
+
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-
 		getMenuInflater().inflate(R.menu.swiper_tab, menu);
 		return true;
 	}
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		int id = item.getItemId();
-		if (id == R.id.action_settings) {
+		switch (item.getItemId()) {
+		case R.id.action_save:
+			logD("Clicked save");
+			printDetails();
 			return true;
+		case R.id.action_settings:
+			logD("Clicked settings");
+			return true;
+		default:
+			return super.onOptionsItemSelected(item);
 		}
-		return super.onOptionsItemSelected(item);
 	}
 
 	@Override
@@ -138,13 +144,11 @@ public class SwiperTabActivity extends BaseActivity implements ActionBar.TabList
 	}
 
 	@Override
-	public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
-	}
+	public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {}
 
 	@Override
-	public void onTabReselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
-	}
-	
+	public void onTabReselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {}
+
 	public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
 		public SectionsPagerAdapter(FragmentManager fm) {
@@ -153,23 +157,21 @@ public class SwiperTabActivity extends BaseActivity implements ActionBar.TabList
 
 		@Override
 		public Fragment getItem(int position) {
-			
-			if(position == 0){
+
+			if (position == 0) {
 				mPersonalDetailsTabFragment = new PersonalDetailsTabFragment();
 				mTabsList.add(mPersonalDetailsTabFragment);
 				return mPersonalDetailsTabFragment;
-			}
-			else if(position == 1){
+			} else if (position == 1) {
 				mLocationDetailsFragment = new LocationDetailsFragment();
 				mTabsList.add(mLocationDetailsFragment);
 				return mLocationDetailsFragment;
-			}
-			else{
+			} else {
 				mStructureDetailsTabFragment = new StructureDetailsTabFragment();
 				mTabsList.add(mStructureDetailsTabFragment);
 				return mStructureDetailsTabFragment;
 			}
-			
+
 		}
 
 		@Override

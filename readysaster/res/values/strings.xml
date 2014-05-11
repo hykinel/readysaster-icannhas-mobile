@@ -4,7 +4,7 @@
     <string name="app_name">Surveyor</string>
     <string name="action_settings">Settings</string>
     <string name="hello_world">Hello world!</string>
-    <string name="title_activity_swiper_tab">SwiperTabActivity</string>
+    <string name="title_activity_swiper_tab">Surveyor</string>
     <string name="title_section1">Personal Details</string>
     <string name="title_section2">Location Details</string>
     <string name="title_section3">Structure Details</string>
