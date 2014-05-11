@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.app.ActionBar;
-import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
@@ -19,7 +18,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.Toast;
 
-public class SwiperTabActivity extends Activity implements ActionBar.TabListener {
+public class SwiperTabActivity extends BaseActivity implements ActionBar.TabListener {
 
 	private Button mSaveButton;
 	private SectionsPagerAdapter mSectionsPagerAdapter;
