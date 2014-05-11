@@ -151,13 +151,13 @@ public class DataDao extends AbstractDao<Data, Long> {
             builder.append(',');
             SqlUtils.appendColumns(builder, "T0", daoSession.getPersonalDetailsDao().getAllColumns());
             builder.append(',');
-            SqlUtils.appendColumns(builder, "T1", daoSession.getLocationDao().getAllColumns());
+            SqlUtils.appendColumns(builder, "T1", daoSession.getLocationDetailsDao().getAllColumns());
             builder.append(',');
-            SqlUtils.appendColumns(builder, "T2", daoSession.getStructureDao().getAllColumns());
+            SqlUtils.appendColumns(builder, "T2", daoSession.getStructureDetailsDao().getAllColumns());
             builder.append(" FROM DATA T");
             builder.append(" LEFT JOIN PERSONAL_DETAILS T0 ON T.'PERSONAL_ID'=T0.'_id'");
-            builder.append(" LEFT JOIN LOCATION T1 ON T.'LOCATION_ID'=T1.'_id'");
-            builder.append(" LEFT JOIN STRUCTURE T2 ON T.'STRUCTURE_ID'=T2.'_id'");
+            builder.append(" LEFT JOIN LOCATION_DETAILS T1 ON T.'LOCATION_ID'=T1.'_id'");
+            builder.append(" LEFT JOIN STRUCTURE_DETAILS T2 ON T.'STRUCTURE_ID'=T2.'_id'");
             builder.append(' ');
             selectDeep = builder.toString();
         }
@@ -172,12 +172,12 @@ public class DataDao extends AbstractDao<Data, Long> {
         entity.setPersonalDetails(personalDetails);
         offset += daoSession.getPersonalDetailsDao().getAllColumns().length;
 
-        Location location = loadCurrentOther(daoSession.getLocationDao(), cursor, offset);
-        entity.setLocation(location);
-        offset += daoSession.getLocationDao().getAllColumns().length;
+        LocationDetails locationDetails = loadCurrentOther(daoSession.getLocationDetailsDao(), cursor, offset);
+        entity.setLocationDetails(locationDetails);
+        offset += daoSession.getLocationDetailsDao().getAllColumns().length;
 
-        Structure structure = loadCurrentOther(daoSession.getStructureDao(), cursor, offset);
-        entity.setStructure(structure);
+        StructureDetails structureDetails = loadCurrentOther(daoSession.getStructureDetailsDao(), cursor, offset);
+        entity.setStructureDetails(structureDetails);
 
         return entity;    
     }

@@ -13,7 +13,7 @@ import de.greenrobot.daogenerator.Schema;
  */
 public class ReadysasterDaoGenerator {
 	public static void main(String[] args) throws IOException, Exception {
-		Schema schema = new Schema(1, "com.icannhas.readysaster");
+		Schema schema = new Schema(2, "com.icannhas.readysaster");
 		schema.enableKeepSectionsByDefault();
 
 		addEntities(schema);
@@ -30,12 +30,13 @@ public class ReadysasterDaoGenerator {
 		personal.addStringProperty("name");
 		personal.addLongProperty("contact_number");
 
-		Entity location = schema.addEntity("Location");
+		Entity location = schema.addEntity("LocationDetails");
 		location.addIdProperty();
 		location.addDoubleProperty("lat");
 		location.addDoubleProperty("lng");
+		location.addStringProperty("photoFile");
 
-		Entity structure = schema.addEntity("Structure");
+		Entity structure = schema.addEntity("StructureDetails");
 		structure.addIdProperty();
 		structure.addIntProperty("house_size");
 		structure.addStringProperty("building_material");

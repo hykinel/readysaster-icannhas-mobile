@@ -91,19 +91,19 @@ public class SwiperTabActivity extends Activity implements ActionBar.TabListener
 		Log.e("details",details.toString());
 		try{
 			PersonalDetails personal = mPersonalDetailsTabFragment.getPersonalDetails();
-			Location location = mLocationDetailsFragment.getLocationDetails();
-			Structure structure = mStructureDetailsTabFragment.getStructureDetails();
+			LocationDetails location = mLocationDetailsFragment.getLocationDetails();
+			StructureDetails structure = mStructureDetailsTabFragment.getStructureDetails();
 			
 			Data data = new Data();
 			data.setPersonalDetails(personal);
-			data.setLocation(location);
-			data.setStructure(structure);
+			data.setLocationDetails(location);
+			data.setStructureDetails(structure);
 			
 			DaoSession daoSession = ReadysasterApplication.getInstance().getDaoSession();
 			DataDao dataDao = daoSession.getDataDao();
 			PersonalDetailsDao personalDao = daoSession.getPersonalDetailsDao();
-			StructureDao structureDao = daoSession.getStructureDao();
-			LocationDao locationDao = daoSession.getLocationDao();
+			StructureDetailsDao structureDao = daoSession.getStructureDetailsDao();
+			LocationDetailsDao locationDao = daoSession.getLocationDetailsDao();
 			
 			personalDao.insertInTx(personal);
 			structureDao.insertInTx(structure);

@@ -33,8 +33,8 @@ public class LocationDetailsFragment extends BasicTabFragment {
 		mRowList.add(mLngRow);
 	}
 	
-	public Location getLocationDetails(){
-		return new Location(null, Double.parseDouble(mLatRow.getDetails()), Double.parseDouble(mLngRow.getDetails()));
+	public LocationDetails getLocationDetails(){
+		return new LocationDetails(null, Double.parseDouble(mLatRow.getDetails()), Double.parseDouble(mLngRow.getDetails()), "");
 	}
 	
 	@Override

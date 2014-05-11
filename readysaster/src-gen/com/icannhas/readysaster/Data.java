@@ -26,11 +26,11 @@ public class Data {
     private PersonalDetails personalDetails;
     private Long personalDetails__resolvedKey;
 
-    private Location location;
-    private Long location__resolvedKey;
+    private LocationDetails locationDetails;
+    private Long locationDetails__resolvedKey;
 
-    private Structure structure;
-    private Long structure__resolvedKey;
+    private StructureDetails structureDetails;
+    private Long structureDetails__resolvedKey;
 
 
     // KEEP FIELDS - put your custom fields here
@@ -114,52 +114,52 @@ public class Data {
     }
 
     /** To-one relationship, resolved on first access. */
-    public Location getLocation() {
+    public LocationDetails getLocationDetails() {
         Long __key = this.location_id;
-        if (location__resolvedKey == null || !location__resolvedKey.equals(__key)) {
+        if (locationDetails__resolvedKey == null || !locationDetails__resolvedKey.equals(__key)) {
             if (daoSession == null) {
                 throw new DaoException("Entity is detached from DAO context");
             }
-            LocationDao targetDao = daoSession.getLocationDao();
-            Location locationNew = targetDao.load(__key);
+            LocationDetailsDao targetDao = daoSession.getLocationDetailsDao();
+            LocationDetails locationDetailsNew = targetDao.load(__key);
             synchronized (this) {
-                location = locationNew;
-            	location__resolvedKey = __key;
+                locationDetails = locationDetailsNew;
+            	locationDetails__resolvedKey = __key;
             }
         }
-        return location;
+        return locationDetails;
     }
 
-    public void setLocation(Location location) {
+    public void setLocationDetails(LocationDetails locationDetails) {
         synchronized (this) {
-            this.location = location;
-            location_id = location == null ? null : location.getId();
-            location__resolvedKey = location_id;
+            this.locationDetails = locationDetails;
+            location_id = locationDetails == null ? null : locationDetails.getId();
+            locationDetails__resolvedKey = location_id;
         }
     }
 
     /** To-one relationship, resolved on first access. */
-    public Structure getStructure() {
+    public StructureDetails getStructureDetails() {
         Long __key = this.structure_id;
-        if (structure__resolvedKey == null || !structure__resolvedKey.equals(__key)) {
+        if (structureDetails__resolvedKey == null || !structureDetails__resolvedKey.equals(__key)) {
             if (daoSession == null) {
                 throw new DaoException("Entity is detached from DAO context");
             }
-            StructureDao targetDao = daoSession.getStructureDao();
-            Structure structureNew = targetDao.load(__key);
+            StructureDetailsDao targetDao = daoSession.getStructureDetailsDao();
+            StructureDetails structureDetailsNew = targetDao.load(__key);
             synchronized (this) {
-                structure = structureNew;
-            	structure__resolvedKey = __key;
+                structureDetails = structureDetailsNew;
+            	structureDetails__resolvedKey = __key;
             }
         }
-        return structure;
+        return structureDetails;
     }
 
-    public void setStructure(Structure structure) {
+    public void setStructureDetails(StructureDetails structureDetails) {
         synchronized (this) {
-            this.structure = structure;
-            structure_id = structure == null ? null : structure.getId();
-            structure__resolvedKey = structure_id;
+            this.structureDetails = structureDetails;
+            structure_id = structureDetails == null ? null : structureDetails.getId();
+            structureDetails__resolvedKey = structure_id;
         }
     }
 

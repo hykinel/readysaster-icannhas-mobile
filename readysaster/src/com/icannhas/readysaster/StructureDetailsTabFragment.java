@@ -67,8 +67,8 @@ public class StructureDetailsTabFragment extends BasicTabFragment {
 		mBuildingMaterialRow.setSpinnerSelectedListener(buildingMatsListener);
 	}
 	
-	public Structure getStructureDetails(){
-		return new Structure(null, Integer.parseInt(mHouseSizeRow.getDetails()), mBuildingMaterialRow.getDetails(), mStructuralTypeRow.getDetails(), Integer.parseInt(mNumberStoreysRow.getDetails()));
+	public StructureDetails getStructureDetails(){
+		return new StructureDetails(null, Integer.parseInt(mHouseSizeRow.getDetails()), mBuildingMaterialRow.getDetails(), mStructuralTypeRow.getDetails(), Integer.parseInt(mNumberStoreysRow.getDetails()));
 	}
 	
 	@Override
