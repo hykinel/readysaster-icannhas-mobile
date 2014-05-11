@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.app.Fragment;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -39,7 +40,9 @@ public class DataListFragment extends Fragment {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 				
-				//Intent intent = new Intent(getActivity())
+				Intent intent = new Intent(getActivity(), DetailsActivity.class);
+				intent.putExtra(Utilities.INTENT_KEY_DETAILSACTIVITY, position);
+				startActivity(intent);
 				
 			}
 		});

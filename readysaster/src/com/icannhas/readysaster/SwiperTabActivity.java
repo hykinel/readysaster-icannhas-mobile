@@ -90,26 +90,40 @@ public class SwiperTabActivity extends Activity implements ActionBar.TabListener
 		}
 		Log.e("details",details.toString());
 		try{
+			DaoSession daoSession = ReadysasterApplication.getInstance().getDaoSession();
+			DataDao dataDao = daoSession.getDataDao();
 			PersonalDetails personal = mPersonalDetailsTabFragment.getPersonalDetails();
 			LocationDetails location = mLocationDetailsFragment.getLocationDetails();
 			StructureDetails structure = mStructureDetailsTabFragment.getStructureDetails();
-			
+			PersonalDetailsDao personalDao = daoSession.getPersonalDetailsDao();
+			StructureDetailsDao structureDao = daoSession.getStructureDetailsDao();
+			LocationDetailsDao locationDao = daoSession.getLocationDetailsDao();
 			Data data = new Data();
+			personalDao.insert(personal);
+			structureDao.insert(structure);
+			locationDao.insert(location);
+			dataDao.insert(data);
+			
+			
 			data.setPersonalDetails(personal);
 			data.setLocationDetails(location);
 			data.setStructureDetails(structure);
 			
-			DaoSession daoSession = ReadysasterApplication.getInstance().getDaoSession();
-			DataDao dataDao = daoSession.getDataDao();
-			PersonalDetailsDao personalDao = daoSession.getPersonalDetailsDao();
-			StructureDetailsDao structureDao = daoSession.getStructureDetailsDao();
-			LocationDetailsDao locationDao = daoSession.getLocationDetailsDao();
+			dataDao.update(data);
+			personalDao.update(personal);
+			structureDao.update(structure);
+			locationDao.update(location);
 			
-			personalDao.insertInTx(personal);
-			structureDao.insertInTx(structure);
-			locationDao.insertInTx(location);
 			
-			dataDao.insertInTx(data);
+			Log.e("name",personal.getName());
+			Log.e("name",data.getPersonalDetails().getName());
+			
+			
+			
+			
+			
+			
+			
 		} catch (Exception e){
 			e.printStackTrace();
 			Toast.makeText(this, "Some details are incorrect", Toast.LENGTH_LONG).show();
@@ -165,10 +179,14 @@ public class SwiperTabActivity extends Activity implements ActionBar.TabListener
 				mTabsList.add(mLocationDetailsFragment);
 				return mLocationDetailsFragment;
 			}
-			else{
+			else if(position == 2){
 				mStructureDetailsTabFragment = new StructureDetailsTabFragment();
 				mTabsList.add(mStructureDetailsTabFragment);
 				return mStructureDetailsTabFragment;
+			}
+			else{
+				DataListFragment fragment = new DataListFragment();
+				return fragment;
 			}
 			
 		}
@@ -176,18 +194,21 @@ public class SwiperTabActivity extends Activity implements ActionBar.TabListener
 		@Override
 		public int getCount() {
 			// Show 3 total pages.
-			return 3;
+			return 4;
 		}
 
 		@Override
 		public CharSequence getPageTitle(int position) {
 			switch (position) {
+			
 			case 0:
 				return getString(R.string.title_section1);
 			case 1:
 				return getString(R.string.title_section2);
 			case 2:
 				return getString(R.string.title_section3);
+			case 3:
+				return getString(R.string.title_section4);
 			}
 			return null;
 		}
