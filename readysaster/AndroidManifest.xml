@@ -39,6 +39,10 @@
             android:name="com.icannhas.readysaster.MainActivity"
             android:label="@string/app_name" >
         </activity>
+        <activity
+            android:name="com.icannhas.readysaster.DetailsActivity"
+            android:label="@string/app_name" >
+        </activity>
     </application>
 
 </manifest>

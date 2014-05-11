@@ -8,5 +8,6 @@
     <string name="title_section1">Personal Details</string>
     <string name="title_section2">Location Details</string>
     <string name="title_section3">Structure Details</string>
+    <string name="title_section4">Data list</string>
 
 </resources>

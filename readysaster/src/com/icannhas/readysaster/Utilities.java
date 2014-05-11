@@ -7,7 +7,9 @@ public class Utilities {
 	public static final String DEBUG_TAG = "READYSASTER_DEBUG";
 	public static final String ERROR_TAG = "READYSASTER_ERROR";
 	public static final String INFO_TAG = "READYSASTER_INFO";
-
+	
+	public static final String INTENT_KEY_DETAILSACTIVITY = "INTENT_KEY_DETAILSACTIVITY";
+	
 	// Data choices
 	public static final String[] buildingMaterial = new String[] { "WOOD", "HYBRID", "MASONRY", "CONCRETE", "STEEL" };
 	public static String[] getStructureTypeList(String buildingMat) {

@@ -27,6 +27,7 @@ public class SwiperTabActivity extends BaseActivity implements ActionBar.TabList
 	private PersonalDetailsTabFragment mPersonalDetailsTabFragment;
 	private LocationDetailsFragment mLocationDetailsFragment;
 	private StructureDetailsTabFragment mStructureDetailsTabFragment;
+	private DataListFragment mDataListFragment;
 
 	private List<BasicTabFragment> mTabsList;
 
@@ -89,27 +90,33 @@ public class SwiperTabActivity extends BaseActivity implements ActionBar.TabList
 		}
 		Log.e("details", details.toString());
 		try {
+			DaoSession daoSession = ReadysasterApplication.getInstance().getDaoSession();
+			DataDao dataDao = daoSession.getDataDao();
 			PersonalDetails personal = mPersonalDetailsTabFragment.getPersonalDetails();
 			LocationDetails location = mLocationDetailsFragment.getLocationDetails();
 			StructureDetails structure = mStructureDetailsTabFragment.getStructureDetails();
 
+			PersonalDetailsDao personalDao = daoSession.getPersonalDetailsDao();
+			StructureDetailsDao structureDao = daoSession.getStructureDetailsDao();
+			LocationDetailsDao locationDao = daoSession.getLocationDetailsDao();
 			Data data = new Data();
+			personalDao.insert(personal);
+			structureDao.insert(structure);
+			locationDao.insert(location);
+			dataDao.insert(data);
+
 			data.setPersonalDetails(personal);
 			data.setLocationDetails(location);
 			data.setStructureDetails(structure);
 
-			DaoSession daoSession = ReadysasterApplication.getInstance().getDaoSession();
-			DataDao dataDao = daoSession.getDataDao();
-			PersonalDetailsDao personalDao = daoSession.getPersonalDetailsDao();
-			StructureDetailsDao structureDao = daoSession.getStructureDetailsDao();
-			LocationDetailsDao locationDao = daoSession.getLocationDetailsDao();
+			dataDao.update(data);
+			personalDao.update(personal);
+			structureDao.update(structure);
+			locationDao.update(location);
 
-			personalDao.insertInTx(personal);
-			structureDao.insertInTx(structure);
-			locationDao.insertInTx(location);
+			Log.e("name", personal.getName());
+			Log.e("name", data.getPersonalDetails().getName());
 
-			dataDao.insertInTx(data);
-			Toast.makeText(this, "Successfully saved data!", Toast.LENGTH_SHORT).show();
 		} catch (Exception e) {
 			e.printStackTrace();
 			Toast.makeText(this, "Please fill in all the details.", Toast.LENGTH_SHORT).show();
@@ -166,10 +173,13 @@ public class SwiperTabActivity extends BaseActivity implements ActionBar.TabList
 				mLocationDetailsFragment = new LocationDetailsFragment();
 				mTabsList.add(mLocationDetailsFragment);
 				return mLocationDetailsFragment;
-			} else {
+			} else if (position == 2) {
 				mStructureDetailsTabFragment = new StructureDetailsTabFragment();
 				mTabsList.add(mStructureDetailsTabFragment);
 				return mStructureDetailsTabFragment;
+			} else {
+				mDataListFragment = new DataListFragment();
+				return mDataListFragment;
 			}
 
 		}
@@ -177,18 +187,21 @@ public class SwiperTabActivity extends BaseActivity implements ActionBar.TabList
 		@Override
 		public int getCount() {
 			// Show 3 total pages.
-			return 3;
+			return 4;
 		}
 
 		@Override
 		public CharSequence getPageTitle(int position) {
 			switch (position) {
+
 			case 0:
 				return getString(R.string.title_section1);
 			case 1:
 				return getString(R.string.title_section2);
 			case 2:
 				return getString(R.string.title_section3);
+			case 3:
+				return getString(R.string.title_section4);
 			}
 			return null;
 		}
