@@ -8,12 +8,16 @@
         android:id="@+id/textview_key"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="?android:attr/textAppearanceLarge" />
+        android:paddingLeft="5dp"
+        android:textSize="15sp" />
     
     <TextView 
         android:id="@+id/textview_val"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="?android:attr/textAppearanceMedium"/>
+        android:paddingLeft="10dp"
+        android:textColor="#0000ff"
+        android:text="Afaf"
+        android:textSize="12sp"/>
 
 </LinearLayout>

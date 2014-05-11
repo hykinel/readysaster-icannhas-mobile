@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.app.ActionBar;
-import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
@@ -19,48 +18,49 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.Toast;
 
-public class SwiperTabActivity extends Activity implements ActionBar.TabListener {
+public class SwiperTabActivity extends BaseActivity implements ActionBar.TabListener {
 
 	private Button mSaveButton;
 	private SectionsPagerAdapter mSectionsPagerAdapter;
 	private ViewPager mViewPager;
-	
+
 	private PersonalDetailsTabFragment mPersonalDetailsTabFragment;
 	private LocationDetailsFragment mLocationDetailsFragment;
 	private StructureDetailsTabFragment mStructureDetailsTabFragment;
-	
+	private DataListFragment mDataListFragment;
+
 	private List<BasicTabFragment> mTabsList;
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_swiper_tab);
-		
+
 		mTabsList = new ArrayList<BasicTabFragment>();
-		
+
 		setupViews();
 		setupListeners();
 	}
-	
-	public void setupViews(){
+
+	public void setupViews() {
 
 		mSaveButton = (Button) findViewById(R.id.save_button);
 		setupPager();
 	}
-	
-	public void setupListeners(){
+
+	public void setupListeners() {
 		mSaveButton.setOnClickListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
-				
+
 				printDetails();
-				
+
 			}
 		});
 	}
-	
-	public void setupPager(){
+
+	public void setupPager() {
 
 		final ActionBar actionBar = getActionBar();
 		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
@@ -80,16 +80,16 @@ public class SwiperTabActivity extends Activity implements ActionBar.TabListener
 			actionBar.addTab(actionBar.newTab().setText(mSectionsPagerAdapter.getPageTitle(i)).setTabListener(this));
 		}
 	}
-	
-	public void printDetails(){
+
+	public void printDetails() {
 		StringBuilder details = new StringBuilder();
-		for(int i = 0;i<mTabsList.size();i++){
+		for (int i = 0; i < mTabsList.size(); i++) {
 			BasicTabFragment fragment = mTabsList.get(i);
 			details.append(fragment.toJsonString());
 			details.append("\n");
 		}
-		Log.e("details",details.toString());
-		try{
+		Log.e("details", details.toString());
+		try {
 			DaoSession daoSession = ReadysasterApplication.getInstance().getDaoSession();
 			DataDao dataDao = daoSession.getDataDao();
 			PersonalDetails personal = mPersonalDetailsTabFragment.getPersonalDetails();
@@ -103,34 +103,26 @@ public class SwiperTabActivity extends Activity implements ActionBar.TabListener
 			structureDao.insert(structure);
 			locationDao.insert(location);
 			dataDao.insert(data);
-			
-			
+
 			data.setPersonalDetails(personal);
 			data.setLocationDetails(location);
 			data.setStructureDetails(structure);
-			
+
 			dataDao.update(data);
 			personalDao.update(personal);
 			structureDao.update(structure);
 			locationDao.update(location);
-			
-			
-			Log.e("name",personal.getName());
-			Log.e("name",data.getPersonalDetails().getName());
-			
-			
-			
-			
-			
-			
-			
-		} catch (Exception e){
+
+			Log.e("name", personal.getName());
+			Log.e("name", data.getPersonalDetails().getName());
+
+		} catch (Exception e) {
 			e.printStackTrace();
 			Toast.makeText(this, "Some details are incorrect", Toast.LENGTH_LONG).show();
 		}
-		
+
 	}
-	
+
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 
@@ -159,7 +151,7 @@ public class SwiperTabActivity extends Activity implements ActionBar.TabListener
 	@Override
 	public void onTabReselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
 	}
-	
+
 	public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
 		public SectionsPagerAdapter(FragmentManager fm) {
@@ -168,27 +160,24 @@ public class SwiperTabActivity extends Activity implements ActionBar.TabListener
 
 		@Override
 		public Fragment getItem(int position) {
-			
-			if(position == 0){
+
+			if (position == 0) {
 				mPersonalDetailsTabFragment = new PersonalDetailsTabFragment();
 				mTabsList.add(mPersonalDetailsTabFragment);
 				return mPersonalDetailsTabFragment;
-			}
-			else if(position == 1){
+			} else if (position == 1) {
 				mLocationDetailsFragment = new LocationDetailsFragment();
 				mTabsList.add(mLocationDetailsFragment);
 				return mLocationDetailsFragment;
-			}
-			else if(position == 2){
+			} else if (position == 2) {
 				mStructureDetailsTabFragment = new StructureDetailsTabFragment();
 				mTabsList.add(mStructureDetailsTabFragment);
 				return mStructureDetailsTabFragment;
+			} else {
+				mDataListFragment = new DataListFragment();
+				return mDataListFragment;
 			}
-			else{
-				DataListFragment fragment = new DataListFragment();
-				return fragment;
-			}
-			
+
 		}
 
 		@Override
@@ -200,7 +189,7 @@ public class SwiperTabActivity extends Activity implements ActionBar.TabListener
 		@Override
 		public CharSequence getPageTitle(int position) {
 			switch (position) {
-			
+
 			case 0:
 				return getString(R.string.title_section1);
 			case 1:

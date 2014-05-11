@@ -47,5 +47,9 @@ public class DataListFragment extends Fragment {
 			}
 		});
 	}
+	
+	public ListView getListView(){
+		return vList;
+	}
 
 }

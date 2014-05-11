@@ -4,14 +4,37 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
-    <com.icannhas.readysaster.utils.views.DetailsRow
-        android:id="@+id/detailsrow_lat"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-    
-    <com.icannhas.readysaster.utils.views.DetailsRow
-        android:id="@+id/detailsrow_lng"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="match_parent"
+        android:fillViewport="true" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <com.icannhas.readysaster.utils.views.DetailsRow
+                android:id="@+id/detailsrow_lat"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <com.icannhas.readysaster.utils.views.DetailsRow
+                android:id="@+id/detailsrow_lng"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <Button
+                android:id="@+id/button_camera"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Take Picture" />
+
+            <ImageView
+                android:id="@+id/full_photo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+    </ScrollView>
 
 </LinearLayout>
